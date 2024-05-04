@@ -1,13 +1,21 @@
 #root {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+.title {
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
 .questionForm {
-  min-height: 300px;
-  max-width: 600px;
+  width: 500px;
+  min-height: 390px;
 }
 
 .questionText {
