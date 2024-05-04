@@ -25,7 +25,7 @@ const QuestionForm: FC<Props> = ({ question, onPrev, onNext }) => {
             label={question.task}
             color="primary"
           >
-            {question?.options.map((option) =>
+            {question.options.map((option) =>
               <Radio key={option.id} value={String(option.id)}>
                 {option.text}
               </Radio>)}

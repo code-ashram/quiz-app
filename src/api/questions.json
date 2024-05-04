@@ -151,23 +151,18 @@
     },
     {
       "id": 8,
-      "task": "Fill in the following word:",
-      "question": "Those whose intelligence has been stolen by material desires surrender unto <...> and follow the particular rules and regulations of worship according to their own natures",
+      "task": "Choose the correct answer:",
+      "question": "If a person engaged in devotional service commits the most abominable act, should he still be considered a saint?",
       "options": [
         {
           "id": 81,
-          "text": "spirits",
-          "isCorrect": false
+          "text": "Yes",
+          "isCorrect": true
         },
         {
           "id": 82,
-          "text": "demons",
+          "text": "No",
           "isCorrect": false
-        },
-        {
-          "id": 83,
-          "text": "demigods",
-          "isCorrect": true
         }
       ]
     },
