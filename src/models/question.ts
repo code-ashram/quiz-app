@@ -15,5 +15,3 @@ type Answer = {
   id: number
   isCorrect: boolean
 }
-
-type Result = Answer[]
