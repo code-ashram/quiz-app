@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Question } from '../models/question.ts'
+import { Question } from '../models'
 
 const BASE_URL = 'http://localhost:3000'
 
