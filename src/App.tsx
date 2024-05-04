@@ -1,6 +1,12 @@
+import { useQuery } from '@tanstack/react-query'
+import { getQuestions } from './api/client.ts'
+
 import './App.css'
 
 const App = () => {
+  const { data } = useQuery({ queryKey: ['questions'], queryFn: getQuestions })
+
+  console.log(data)
 
   return (
     <>

@@ -1,4 +1,4 @@
-type Question = {
+export type Question = {
   id: number
   task: string
   question: string
@@ -11,7 +11,7 @@ type Option = {
   isCorrect: boolean
 }
 
-type Answer = {
+export type Answer = {
   id: number
   isCorrect: boolean
 }
