@@ -12,6 +12,6 @@ type Option = {
 }
 
 export type Answer = {
-  id: number
-  isCorrect: boolean
+  questionId: number
+  answerId: number
 }

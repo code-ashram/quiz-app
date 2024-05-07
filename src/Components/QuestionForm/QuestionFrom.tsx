@@ -1,17 +1,23 @@
-import { FC } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import { Card, CardBody, CardFooter, CardHeader, Divider, Button, Radio, RadioGroup } from '@nextui-org/react'
-import { Question } from '../../models'
+import { Answer, Question } from '../../models'
 
 type Props = {
+  onNext: (answer: Answer) => void
   question: Question
-  onNext: () => void
-  onPrev: () => void
 }
 
-const QuestionForm: FC<Props> = ({ question, onPrev, onNext }) => {
+const QuestionForm: FC<Props> = ({ question, onNext }) => {
+  const [answer, setAnswer] = useState<Answer | null>(null)
+
+  const handleSubmitAnswer = (e: FormEvent) => {
+    e.preventDefault()
+      if (answer) onNext(answer)
+      setAnswer(null)
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmitAnswer}>
       <Card className="questionForm">
         <CardHeader className="flex flex-col items-start gap-3">
           <h2>Question №{question.id}</h2>
@@ -26,7 +32,8 @@ const QuestionForm: FC<Props> = ({ question, onPrev, onNext }) => {
             color="primary"
           >
             {question.options.map((option) =>
-              <Radio key={option.id} value={String(option.id)}>
+              <Radio key={option.id} value={String(option.id)}
+                     onChange={() => setAnswer({ answerId: option.id, questionId: question.id })}>
                 {option.text}
               </Radio>)}
           </RadioGroup>
@@ -35,11 +42,11 @@ const QuestionForm: FC<Props> = ({ question, onPrev, onNext }) => {
         <Divider />
 
         <CardFooter>
-          <Button color="primary" onClick={onPrev}>
-            Prev
-          </Button>
+          {/* <Button color="primary" onClick={onPrev}> */}
+          {/*   Prev */}
+          {/* </Button> */}
 
-          <Button className="ml-2" color="primary" onClick={onNext}>
+          <Button className="ml-2" color="primary" type="submit" isDisabled={!answer}>
             Next
           </Button>
         </CardFooter>
