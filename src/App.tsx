@@ -15,19 +15,6 @@ const App = () => {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Answer[]>([])
 
-  const checkedResult = data?.map((question) => {
-    const userAnswer = answers.find((answer) => answer.questionId === question.id)
-    const answer = question.options.find((option) => option.id === userAnswer?.answerId)
-
-    return {
-      question: question.question,
-      answer: answer?.text,
-      isCorrect: !!answer?.isCorrect,
-    }
-  })
-
-  console.log(checkedResult)
-
   const handleNextClick = (answer: Answer): void => {
     setAnswers(prevAnswers => [...prevAnswers, answer])
 
@@ -54,8 +41,17 @@ const App = () => {
             question={data[step]}
             onNext={handleNextClick}
           />
-          : <Results source={checkedResult}/>
+          : data && <Results questions={data} answers={answers}/>
       }
+
+      {/*{*/}
+      {/*  data && answers.length < data.length*/}
+      {/*    && <QuestionForm*/}
+      {/*      question={data[step]}*/}
+      {/*      onNext={handleNextClick}*/}
+      {/*    />*/}
+      {/*}*/}
+
     </>
   )
 }

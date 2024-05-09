@@ -21,3 +21,27 @@
 .questionText {
   margin-bottom: 12px;
 }
+
+.results {
+  padding: 10px;
+  width: 500px;
+  text-align: left;
+}
+
+.results li:not(:first-child) {
+  margin-top: 10px;
+}
+
+.answer {
+  padding: 10px;
+}
+
+.correct {
+  font-weight: bold;
+  color: #13c213;
+}
+
+.wrong {
+  font-weight: bold;
+  color: #ec280b;
+}

@@ -1,22 +1,36 @@
 import {FC} from "react";
 import {Card} from "@nextui-org/react";
-import {CheckedAnswer} from "../../models";
+import {Answer, Question} from "../../models";
+
 
 type Props = {
-  source: CheckedAnswer[]
+  questions: Question[]
+  answers: Answer[]
 }
 
-const Results: FC<Props> = ({source}) => {
+const Results: FC<Props> = ({questions, answers}) => {
 
   return (
     <Card className="results">
       <ul>
-        {source.map((answer) =>
-          <li key={answer.answer}>
-            <p>Question: {answer.question}</p>
-            <p>Answer: {answer.answer}</p>
-            <p>{answer.isCorrect ? 'True!' : 'False'}</p>
-          </li>)}
+        {
+          questions.map((question) => {
+            const userAnswer = answers.find((answer) => answer.questionId === question.id)
+            const answer = question.options.find((option) => option.id === userAnswer?.answerId)
+
+            return <li key={question.id}>
+              <Card className="answer">
+                <p className="font-bold">
+                  Question: <span className="font-normal">{question.question}</span>
+                </p>
+
+                <p className="font-bold">
+                  Answer: <span className={answer?.isCorrect ? 'correct' : 'wrong'}>{answer?.text}</span>
+                </p>
+              </Card>
+            </li>
+          })
+        }
       </ul>
     </Card>
   )

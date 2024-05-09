@@ -15,9 +15,3 @@ export type Answer = {
   questionId: number
   answerId: number
 }
-
-export type CheckedAnswer = {
-  question: string,
-  answer: string,
-  isCorrect: boolean,
-}
