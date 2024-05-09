@@ -1,29 +1,38 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Spinner } from '@nextui-org/react'
+import {useState} from 'react'
+import {useQuery} from '@tanstack/react-query'
+import {Spinner} from '@nextui-org/react'
 
 import QuestionForm from './Components/QuestionForm'
-import { getQuestions } from './api'
-import { Answer } from './models'
+import Results from "./Components/Results";
+
+import {getQuestions} from './api'
+import {Answer} from './models'
 
 import './App.css'
 
 const App = () => {
-  const { data, isLoading, isError, error } = useQuery({ queryKey: ['questions'], queryFn: getQuestions })
+  const {data, isLoading, isError, error} = useQuery({queryKey: ['questions'], queryFn: getQuestions})
   const [step, setStep] = useState(0)
-  const [result, setResult] = useState<Answer[]>([])
+  const [answers, setAnswers] = useState<Answer[]>([])
+
+  const checkedResult = data?.map((question) => {
+    const userAnswer = answers.find((answer) => answer.questionId === question.id)
+    const answer = question.options.find((option) => option.id === userAnswer?.answerId)
+
+    return {
+      question: question.question,
+      answer: answer?.text,
+      isCorrect: !!answer?.isCorrect,
+    }
+  })
+
+  console.log(checkedResult)
 
   const handleNextClick = (answer: Answer): void => {
-    setResult(prevAnswers => [...prevAnswers, answer])
-    if (data) setStep((prevStep) => result.length >= data.length ? 0 : prevStep + 1)
-    // if (data) setStep((prevStep) => prevStep === data.length - 1 ? 0 : prevStep + 1)
+    setAnswers(prevAnswers => [...prevAnswers, answer])
+
+    if (data) setStep((prevStep) => answers.length >= data.length ? data.length : prevStep + 1)
   }
-
-  console.log(result)
-
-  // const handlePreviousClick = (): void => {
-  //   if (data) setStep((prevStep) => prevStep <= 0 ? data.length - 1 : prevStep - 1)
-  // }
 
   return (
     <>
@@ -36,14 +45,16 @@ const App = () => {
       }
 
       {
-        isLoading && <Spinner label="Loading..." color="warning" />
+        isLoading && <Spinner label="Loading..." color="warning"/>
       }
 
       {
-        data && <QuestionForm
-          question={data[step]}
-          onNext={handleNextClick}
-        />
+        data && answers.length < data.length
+          ? <QuestionForm
+            question={data[step]}
+            onNext={handleNextClick}
+          />
+          : <Results source={checkedResult}/>
       }
     </>
   )
