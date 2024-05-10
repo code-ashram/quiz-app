@@ -1,19 +1,20 @@
 import { FC, FormEvent, useState } from 'react'
-import { Card, CardBody, CardFooter, CardHeader, Divider, Button, Radio, RadioGroup } from '@nextui-org/react'
+import { Card, CardBody, CardFooter, CardHeader, Divider, Button, Radio, RadioGroup, Progress } from '@nextui-org/react'
 import { Answer, Question } from '../../models'
 
 type Props = {
   onNext: (answer: Answer) => void
   question: Question
+  progress: number | undefined
 }
 
-const QuestionForm: FC<Props> = ({ question, onNext }) => {
+const QuestionForm: FC<Props> = ({ question, onNext, progress }) => {
   const [answer, setAnswer] = useState<Answer | null>(null)
 
   const handleSubmitAnswer = (e: FormEvent) => {
     e.preventDefault()
-      if (answer) onNext(answer)
-      setAnswer(null)
+    if (answer) onNext(answer)
+    setAnswer(null)
   }
 
   return (
@@ -21,7 +22,18 @@ const QuestionForm: FC<Props> = ({ question, onNext }) => {
       <Card className="questionForm">
         <CardHeader className="flex flex-col items-start gap-3">
           <h2>Question №{question.id}</h2>
+
+          <Progress
+            className="max-w-xl"
+            aria-label="Downloading..."
+            label="Your progress:"
+            size="md"
+            value={progress}
+            color="primary"
+            showValueLabel={true}
+          />
         </CardHeader>
+
         <Divider />
 
         <CardBody>
